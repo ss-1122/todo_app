@@ -1,0 +1,14 @@
+import 'package:flutter/material.dart';
+
+/// Todoアプリケーションページ。
+class TodoPage extends StatelessWidget {
+  const TodoPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('TODO')),
+      body: Placeholder(),
+    );
+  }
+}
