@@ -5,4 +5,3 @@ run_build_runner:
 # キャッシュの削除
 clean_runner:
 	flutter pub run build_runner clean
-	
