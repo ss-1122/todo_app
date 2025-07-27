@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:todo_app/theme/custom_color_scheme.dart';
 
 /// Todoページ。
@@ -24,7 +23,10 @@ class TodoPage extends StatelessWidget {
         actionsPadding: const EdgeInsets.only(right: 30),
         automaticallyImplyLeading: false,
       ),
-      body: _TodoPageBody(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        child: _TodoPageBody(),
+      ),
     );
   }
 }
@@ -37,23 +39,15 @@ class _TodoPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Column(
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Gap(20),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(3, 2, 12, 2),
-                child: Icon(Icons.check_box, color: colorScheme.iconColor),
-              ),
-              const Text('Todoの内容です', style: TextStyle(fontSize: 18)),
-            ],
-          ),
+          padding: const EdgeInsets.fromLTRB(3, 2, 12, 2),
+          child: Icon(Icons.check_box, color: colorScheme.iconColor),
         ),
-        const Gap(20),
+        // TODO: 文字数制限を設けるか折り返しできるようにする
+        const Text('Todoの内容です', style: TextStyle(fontSize: 18)),
       ],
     );
   }
