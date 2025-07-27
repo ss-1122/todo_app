@@ -20,6 +20,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: _router,
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        scaffoldBackgroundColor: Colors.white,
+        useMaterial3: true,
+      ),
     );
   }
 }
