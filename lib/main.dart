@@ -25,7 +25,9 @@ class MyApp extends StatelessWidget {
       routerConfig: _router,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: context.colorScheme.seedColor,
+        ),
         textTheme: TextTheme(
           bodyMedium: TextStyle(
             color: context.colorScheme.defaultTextColor,
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         fontFamily: 'NotoSansJp',
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: context.colorScheme.scaffoldBackgroundColor,
         useMaterial3: true,
       ),
     );
