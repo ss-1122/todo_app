@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_app/extensions/color_scheme_extensions.dart';
 import 'package:todo_app/extensions/context_extensions.dart';
+import 'package:todo_app/extensions/font_size_extensions.dart';
 import 'package:todo_app/router/app_routes.dart';
 
 void main() {
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         textTheme: TextTheme(
           bodyMedium: TextStyle(
             color: context.colorScheme.defaultTextColor,
-            fontSize: 12,
+            fontSize: context.textTheme.fontSize12,
           ),
         ),
         fontFamily: 'NotoSansJp',
