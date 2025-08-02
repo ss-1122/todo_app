@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -297,26 +295,12 @@ class _EnterErrorText extends StatelessWidget {
       padding: EdgeInsets.only(top: 5),
       child: Align(
         alignment: Alignment.centerLeft,
-        child: Row(
-          children: [
-            Text(
-              '※',
-              style: TextStyle(
-                // iOSは※が小さく表示されるので大きいフォントにする
-                fontSize: Platform.isAndroid
-                    ? context.textTheme.fontSize12
-                    : context.textTheme.fontSize14,
-                color: context.colorScheme.warningTextColor,
-              ),
-            ),
-            Text(
-              '未入力のTodoは追加できません！',
-              style: TextStyle(
-                fontSize: context.textTheme.fontSize14,
-                color: context.colorScheme.warningTextColor,
-              ),
-            ),
-          ],
+        child: Text(
+          '※未入力のTodoは追加できません！',
+          style: TextStyle(
+            fontSize: context.textTheme.fontSize14,
+            color: context.colorScheme.warningTextColor,
+          ),
         ),
       ),
     );
