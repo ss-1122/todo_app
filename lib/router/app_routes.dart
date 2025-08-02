@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app/features/todo_page.dart';
+import 'package:todo_app/features/pages/todo_page.dart';
 
 part 'app_routes.g.dart';
 

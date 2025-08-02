@@ -37,6 +37,9 @@ dependencies:
   go_router: ^16.0.0
   go_router_builder: ^3.0.1
   gap: ^3.0.1
+  flutter_riverpod: ^2.6.1
+  freezed_annotation: ^3.1.0
+  riverpod_annotation: ^2.6.1
 
 dev_dependencies:
   flutter_test:
@@ -49,6 +52,8 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
   build_runner: ^2.4.15
+  freezed: ^3.0.6
+  riverpod_generator: ^2.6.5
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -91,3 +96,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+  assets:
+    - assets/fonts/
+
+  fonts:
+    - family: NotoSansJP
+      fonts:
+        - asset: assets/fonts/NotoSansJP-Regular.ttf
+          weight: 400
