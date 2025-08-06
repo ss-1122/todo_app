@@ -1,13 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_database.dart';
+part of 'database.dart';
 
 // ignore_for_file: type=lint
-class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
+class $TodosTableTable extends TodosTable
+    with TableInfo<$TodosTableTable, TodosTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $TodosTable(this.attachedDatabase, [this._alias]);
+  $TodosTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _rowIdMeta = const VerificationMeta('rowId');
   @override
   late final GeneratedColumn<int> rowId = GeneratedColumn<int>(
@@ -51,10 +52,10 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'todos';
+  static const String $name = 'todos_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<Todo> instance, {
+    Insertable<TodosTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -85,9 +86,9 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
   @override
   Set<GeneratedColumn> get $primaryKey => {rowId};
   @override
-  Todo map(Map<String, dynamic> data, {String? tablePrefix}) {
+  TodosTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Todo(
+    return TodosTableData(
       rowId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}row_id'],
@@ -104,12 +105,12 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
   }
 
   @override
-  $TodosTable createAlias(String alias) {
-    return $TodosTable(attachedDatabase, alias);
+  $TodosTableTable createAlias(String alias) {
+    return $TodosTableTable(attachedDatabase, alias);
   }
 }
 
-class Todo extends DataClass implements Insertable<Todo> {
+class TodosTableData extends DataClass implements Insertable<TodosTableData> {
   /// 行ID。
   final int rowId;
 
@@ -118,7 +119,11 @@ class Todo extends DataClass implements Insertable<Todo> {
 
   /// Todoが完了したかどうか。
   final bool done;
-  const Todo({required this.rowId, required this.contents, required this.done});
+  const TodosTableData({
+    required this.rowId,
+    required this.contents,
+    required this.done,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -128,20 +133,20 @@ class Todo extends DataClass implements Insertable<Todo> {
     return map;
   }
 
-  TodosCompanion toCompanion(bool nullToAbsent) {
-    return TodosCompanion(
+  TodosTableCompanion toCompanion(bool nullToAbsent) {
+    return TodosTableCompanion(
       rowId: Value(rowId),
       contents: Value(contents),
       done: Value(done),
     );
   }
 
-  factory Todo.fromJson(
+  factory TodosTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Todo(
+    return TodosTableData(
       rowId: serializer.fromJson<int>(json['rowId']),
       contents: serializer.fromJson<String>(json['contents']),
       done: serializer.fromJson<bool>(json['done']),
@@ -157,13 +162,14 @@ class Todo extends DataClass implements Insertable<Todo> {
     };
   }
 
-  Todo copyWith({int? rowId, String? contents, bool? done}) => Todo(
-    rowId: rowId ?? this.rowId,
-    contents: contents ?? this.contents,
-    done: done ?? this.done,
-  );
-  Todo copyWithCompanion(TodosCompanion data) {
-    return Todo(
+  TodosTableData copyWith({int? rowId, String? contents, bool? done}) =>
+      TodosTableData(
+        rowId: rowId ?? this.rowId,
+        contents: contents ?? this.contents,
+        done: done ?? this.done,
+      );
+  TodosTableData copyWithCompanion(TodosTableCompanion data) {
+    return TodosTableData(
       rowId: data.rowId.present ? data.rowId.value : this.rowId,
       contents: data.contents.present ? data.contents.value : this.contents,
       done: data.done.present ? data.done.value : this.done,
@@ -172,7 +178,7 @@ class Todo extends DataClass implements Insertable<Todo> {
 
   @override
   String toString() {
-    return (StringBuffer('Todo(')
+    return (StringBuffer('TodosTableData(')
           ..write('rowId: $rowId, ')
           ..write('contents: $contents, ')
           ..write('done: $done')
@@ -185,27 +191,27 @@ class Todo extends DataClass implements Insertable<Todo> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Todo &&
+      (other is TodosTableData &&
           other.rowId == this.rowId &&
           other.contents == this.contents &&
           other.done == this.done);
 }
 
-class TodosCompanion extends UpdateCompanion<Todo> {
+class TodosTableCompanion extends UpdateCompanion<TodosTableData> {
   final Value<int> rowId;
   final Value<String> contents;
   final Value<bool> done;
-  const TodosCompanion({
+  const TodosTableCompanion({
     this.rowId = const Value.absent(),
     this.contents = const Value.absent(),
     this.done = const Value.absent(),
   });
-  TodosCompanion.insert({
+  TodosTableCompanion.insert({
     this.rowId = const Value.absent(),
     required String contents,
     this.done = const Value.absent(),
   }) : contents = Value(contents);
-  static Insertable<Todo> custom({
+  static Insertable<TodosTableData> custom({
     Expression<int>? rowId,
     Expression<String>? contents,
     Expression<bool>? done,
@@ -217,12 +223,12 @@ class TodosCompanion extends UpdateCompanion<Todo> {
     });
   }
 
-  TodosCompanion copyWith({
+  TodosTableCompanion copyWith({
     Value<int>? rowId,
     Value<String>? contents,
     Value<bool>? done,
   }) {
-    return TodosCompanion(
+    return TodosTableCompanion(
       rowId: rowId ?? this.rowId,
       contents: contents ?? this.contents,
       done: done ?? this.done,
@@ -246,7 +252,7 @@ class TodosCompanion extends UpdateCompanion<Todo> {
 
   @override
   String toString() {
-    return (StringBuffer('TodosCompanion(')
+    return (StringBuffer('TodosTableCompanion(')
           ..write('rowId: $rowId, ')
           ..write('contents: $contents, ')
           ..write('done: $done')
@@ -255,32 +261,33 @@ class TodosCompanion extends UpdateCompanion<Todo> {
   }
 }
 
-abstract class _$AppDatabase extends GeneratedDatabase {
-  _$AppDatabase(QueryExecutor e) : super(e);
-  $AppDatabaseManager get managers => $AppDatabaseManager(this);
-  late final $TodosTable todos = $TodosTable(this);
+abstract class _$Database extends GeneratedDatabase {
+  _$Database(QueryExecutor e) : super(e);
+  $DatabaseManager get managers => $DatabaseManager(this);
+  late final $TodosTableTable todosTable = $TodosTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [todos];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [todosTable];
 }
 
-typedef $$TodosTableCreateCompanionBuilder =
-    TodosCompanion Function({
+typedef $$TodosTableTableCreateCompanionBuilder =
+    TodosTableCompanion Function({
       Value<int> rowId,
       required String contents,
       Value<bool> done,
     });
-typedef $$TodosTableUpdateCompanionBuilder =
-    TodosCompanion Function({
+typedef $$TodosTableTableUpdateCompanionBuilder =
+    TodosTableCompanion Function({
       Value<int> rowId,
       Value<String> contents,
       Value<bool> done,
     });
 
-class $$TodosTableFilterComposer extends Composer<_$AppDatabase, $TodosTable> {
-  $$TodosTableFilterComposer({
+class $$TodosTableTableFilterComposer
+    extends Composer<_$Database, $TodosTableTable> {
+  $$TodosTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -303,9 +310,9 @@ class $$TodosTableFilterComposer extends Composer<_$AppDatabase, $TodosTable> {
   );
 }
 
-class $$TodosTableOrderingComposer
-    extends Composer<_$AppDatabase, $TodosTable> {
-  $$TodosTableOrderingComposer({
+class $$TodosTableTableOrderingComposer
+    extends Composer<_$Database, $TodosTableTable> {
+  $$TodosTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -328,9 +335,9 @@ class $$TodosTableOrderingComposer
   );
 }
 
-class $$TodosTableAnnotationComposer
-    extends Composer<_$AppDatabase, $TodosTable> {
-  $$TodosTableAnnotationComposer({
+class $$TodosTableTableAnnotationComposer
+    extends Composer<_$Database, $TodosTableTable> {
+  $$TodosTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -347,45 +354,51 @@ class $$TodosTableAnnotationComposer
       $composableBuilder(column: $table.done, builder: (column) => column);
 }
 
-class $$TodosTableTableManager
+class $$TodosTableTableTableManager
     extends
         RootTableManager<
-          _$AppDatabase,
-          $TodosTable,
-          Todo,
-          $$TodosTableFilterComposer,
-          $$TodosTableOrderingComposer,
-          $$TodosTableAnnotationComposer,
-          $$TodosTableCreateCompanionBuilder,
-          $$TodosTableUpdateCompanionBuilder,
-          (Todo, BaseReferences<_$AppDatabase, $TodosTable, Todo>),
-          Todo,
+          _$Database,
+          $TodosTableTable,
+          TodosTableData,
+          $$TodosTableTableFilterComposer,
+          $$TodosTableTableOrderingComposer,
+          $$TodosTableTableAnnotationComposer,
+          $$TodosTableTableCreateCompanionBuilder,
+          $$TodosTableTableUpdateCompanionBuilder,
+          (
+            TodosTableData,
+            BaseReferences<_$Database, $TodosTableTable, TodosTableData>,
+          ),
+          TodosTableData,
           PrefetchHooks Function()
         > {
-  $$TodosTableTableManager(_$AppDatabase db, $TodosTable table)
+  $$TodosTableTableTableManager(_$Database db, $TodosTableTable table)
     : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$TodosTableFilterComposer($db: db, $table: table),
+              $$TodosTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$TodosTableOrderingComposer($db: db, $table: table),
+              $$TodosTableTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$TodosTableAnnotationComposer($db: db, $table: table),
+              $$TodosTableTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> rowId = const Value.absent(),
                 Value<String> contents = const Value.absent(),
                 Value<bool> done = const Value.absent(),
-              }) =>
-                  TodosCompanion(rowId: rowId, contents: contents, done: done),
+              }) => TodosTableCompanion(
+                rowId: rowId,
+                contents: contents,
+                done: done,
+              ),
           createCompanionCallback:
               ({
                 Value<int> rowId = const Value.absent(),
                 required String contents,
                 Value<bool> done = const Value.absent(),
-              }) => TodosCompanion.insert(
+              }) => TodosTableCompanion.insert(
                 rowId: rowId,
                 contents: contents,
                 done: done,
@@ -398,24 +411,27 @@ class $$TodosTableTableManager
       );
 }
 
-typedef $$TodosTableProcessedTableManager =
+typedef $$TodosTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$AppDatabase,
-      $TodosTable,
-      Todo,
-      $$TodosTableFilterComposer,
-      $$TodosTableOrderingComposer,
-      $$TodosTableAnnotationComposer,
-      $$TodosTableCreateCompanionBuilder,
-      $$TodosTableUpdateCompanionBuilder,
-      (Todo, BaseReferences<_$AppDatabase, $TodosTable, Todo>),
-      Todo,
+      _$Database,
+      $TodosTableTable,
+      TodosTableData,
+      $$TodosTableTableFilterComposer,
+      $$TodosTableTableOrderingComposer,
+      $$TodosTableTableAnnotationComposer,
+      $$TodosTableTableCreateCompanionBuilder,
+      $$TodosTableTableUpdateCompanionBuilder,
+      (
+        TodosTableData,
+        BaseReferences<_$Database, $TodosTableTable, TodosTableData>,
+      ),
+      TodosTableData,
       PrefetchHooks Function()
     >;
 
-class $AppDatabaseManager {
-  final _$AppDatabase _db;
-  $AppDatabaseManager(this._db);
-  $$TodosTableTableManager get todos =>
-      $$TodosTableTableManager(_db, _db.todos);
+class $DatabaseManager {
+  final _$Database _db;
+  $DatabaseManager(this._db);
+  $$TodosTableTableTableManager get todosTable =>
+      $$TodosTableTableTableManager(_db, _db.todosTable);
 }

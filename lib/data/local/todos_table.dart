@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 
 /// Todosテーブル定義クラス。
-class Todos extends Table {
+class TodosTable extends Table {
   /// 行ID。
   IntColumn get rowId => integer().autoIncrement()();
 

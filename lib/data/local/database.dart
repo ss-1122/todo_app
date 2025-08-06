@@ -3,13 +3,13 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-import 'todos.dart';
+import 'package:todo_app/data/local/todos_table.dart';
 
-part 'app_database.g.dart';
+part 'database.g.dart';
 
-@DriftDatabase(tables: [Todos])
-class AppDatabase extends _$AppDatabase {
-  AppDatabase() : super(_openConnection());
+@DriftDatabase(tables: [TodosTable])
+class Database extends _$Database {
+  Database() : super(_openConnection());
 
   // DBのスキーマバージョン。変更時は上げる
   @override
