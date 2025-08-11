@@ -18,7 +18,7 @@ class TodosRepository {
   final Database db;
 
   /// 全てのレコードを取得する
-  Future<List<TodosTableData>> getAll() async {
+  Future<List<TodosTableData>> getAll() {
     return db.select(db.todosTable).get();
   }
 
@@ -27,25 +27,27 @@ class TodosRepository {
     await db.delete(db.todosTable).go();
   }
 
-  Future<void> insert({required TodosTableData entry}) async {
-    await db
+  /// 1件レコードを登録してrowIdを返却する
+  Future<int> insert(String contents) {
+    return db
         .into(db.todosTable)
         .insert(
-          TodosTableCompanion(
-            contents: Value(entry.contents),
-            done: Value(entry.done),
-          ),
+          TodosTableCompanion(contents: Value(contents), done: Value(false)),
         );
   }
 
-  Future<void> update({required TodosTableData entry}) async {
-    await (db.update(
-      db.todosTable,
-    )..where((t) => t.rowId.equals(entry.rowId))).write(
-      TodosTableCompanion(
-        contents: Value(entry.contents),
-        done: Value(entry.done),
-      ),
-    );
+  Future<void> update({
+    required int rowId,
+    String? contents,
+    bool? done,
+  }) async {
+    db.update(db.todosTable)
+      ..where((tbl) => tbl.rowId.equals(rowId))
+      ..write(
+        TodosTableCompanion(
+          contents: contents != null ? Value(contents) : const Value.absent(),
+          done: done != null ? Value(done) : const Value.absent(),
+        ),
+      );
   }
 }
