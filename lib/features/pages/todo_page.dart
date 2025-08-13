@@ -78,7 +78,7 @@ class TodoPage extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('ロードに失敗しました。自動で再試行中…'),
-              SizedBox(height: 20),
+              const Gap(20),
               Platform.isAndroid
                   ? CircularProgressIndicator()
                   : CupertinoActivityIndicator(),
