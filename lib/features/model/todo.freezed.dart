@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Todo {
 
- bool get onCheck; String get contents;
+ int get rowId; bool get onCheck; String get contents;
 /// Create a copy of Todo
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $TodoCopyWith<Todo> get copyWith => _$TodoCopyWithImpl<Todo>(this as Todo, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Todo&&(identical(other.onCheck, onCheck) || other.onCheck == onCheck)&&(identical(other.contents, contents) || other.contents == contents));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Todo&&(identical(other.rowId, rowId) || other.rowId == rowId)&&(identical(other.onCheck, onCheck) || other.onCheck == onCheck)&&(identical(other.contents, contents) || other.contents == contents));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,onCheck,contents);
+int get hashCode => Object.hash(runtimeType,rowId,onCheck,contents);
 
 @override
 String toString() {
-  return 'Todo(onCheck: $onCheck, contents: $contents)';
+  return 'Todo(rowId: $rowId, onCheck: $onCheck, contents: $contents)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $TodoCopyWith<$Res>  {
   factory $TodoCopyWith(Todo value, $Res Function(Todo) _then) = _$TodoCopyWithImpl;
 @useResult
 $Res call({
- bool onCheck, String contents
+ int rowId, bool onCheck, String contents
 });
 
 
@@ -63,9 +63,10 @@ class _$TodoCopyWithImpl<$Res>
 
 /// Create a copy of Todo
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? onCheck = null,Object? contents = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? rowId = null,Object? onCheck = null,Object? contents = null,}) {
   return _then(_self.copyWith(
-onCheck: null == onCheck ? _self.onCheck : onCheck // ignore: cast_nullable_to_non_nullable
+rowId: null == rowId ? _self.rowId : rowId // ignore: cast_nullable_to_non_nullable
+as int,onCheck: null == onCheck ? _self.onCheck : onCheck // ignore: cast_nullable_to_non_nullable
 as bool,contents: null == contents ? _self.contents : contents // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -78,9 +79,10 @@ as String,
 
 
 class _Todo implements Todo {
-  const _Todo({required this.onCheck, required this.contents});
+  const _Todo({required this.rowId, required this.onCheck, required this.contents});
   
 
+@override final  int rowId;
 @override final  bool onCheck;
 @override final  String contents;
 
@@ -94,16 +96,16 @@ _$TodoCopyWith<_Todo> get copyWith => __$TodoCopyWithImpl<_Todo>(this, _$identit
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Todo&&(identical(other.onCheck, onCheck) || other.onCheck == onCheck)&&(identical(other.contents, contents) || other.contents == contents));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Todo&&(identical(other.rowId, rowId) || other.rowId == rowId)&&(identical(other.onCheck, onCheck) || other.onCheck == onCheck)&&(identical(other.contents, contents) || other.contents == contents));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,onCheck,contents);
+int get hashCode => Object.hash(runtimeType,rowId,onCheck,contents);
 
 @override
 String toString() {
-  return 'Todo(onCheck: $onCheck, contents: $contents)';
+  return 'Todo(rowId: $rowId, onCheck: $onCheck, contents: $contents)';
 }
 
 
@@ -114,7 +116,7 @@ abstract mixin class _$TodoCopyWith<$Res> implements $TodoCopyWith<$Res> {
   factory _$TodoCopyWith(_Todo value, $Res Function(_Todo) _then) = __$TodoCopyWithImpl;
 @override @useResult
 $Res call({
- bool onCheck, String contents
+ int rowId, bool onCheck, String contents
 });
 
 
@@ -131,9 +133,10 @@ class __$TodoCopyWithImpl<$Res>
 
 /// Create a copy of Todo
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? onCheck = null,Object? contents = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? rowId = null,Object? onCheck = null,Object? contents = null,}) {
   return _then(_Todo(
-onCheck: null == onCheck ? _self.onCheck : onCheck // ignore: cast_nullable_to_non_nullable
+rowId: null == rowId ? _self.rowId : rowId // ignore: cast_nullable_to_non_nullable
+as int,onCheck: null == onCheck ? _self.onCheck : onCheck // ignore: cast_nullable_to_non_nullable
 as bool,contents: null == contents ? _self.contents : contents // ignore: cast_nullable_to_non_nullable
 as String,
   ));

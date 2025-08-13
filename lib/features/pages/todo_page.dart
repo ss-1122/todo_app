@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -6,6 +9,7 @@ import 'package:todo_app/extensions/context_extensions.dart';
 import 'package:todo_app/extensions/font_size_extensions.dart';
 import 'package:todo_app/features/model/todo.dart';
 import 'package:todo_app/extensions/color_scheme_extensions.dart';
+import 'package:todo_app/features/model/todo_list_state.dart';
 import 'package:todo_app/features/use_case/todo_list_state_notifier.dart';
 import 'package:todo_app/features/widget/base_dialog.dart';
 
@@ -13,11 +17,26 @@ import 'package:todo_app/features/widget/base_dialog.dart';
 class TodoPage extends ConsumerWidget {
   const TodoPage({super.key});
 
+  static const _delaySec = 2; // 自動リトライまでの時間
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(todoListStateNotifierProvider);
-    final todos = state.todos;
-    final isExistTodo = todos.isNotEmpty;
+    final notifier = ref.watch(todoListStateNotifierProvider);
+
+    // エラー時に自動リトライ
+    ref.listen<AsyncValue<TodoListState>>(todoListStateNotifierProvider, (
+      prev,
+      next,
+    ) {
+      next.maybeWhen(
+        error: (e, _) {
+          Future.delayed(Duration(seconds: _delaySec), () {
+            ref.invalidate(todoListStateNotifierProvider);
+          });
+        },
+        orElse: () {},
+      );
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -29,20 +48,49 @@ class TodoPage extends ConsumerWidget {
         // 削除ボタン
         leading: Padding(
           padding: const EdgeInsets.only(top: 5, left: 5),
-          child: _TodoRemoveButton(isExsistTodo: isExistTodo),
+          child: _TodoRemoveButton(),
         ),
         // 追加ボタン
         actions: [_TodoAddButton()],
         actionsPadding: const EdgeInsets.only(right: 30),
         automaticallyImplyLeading: false,
       ),
-      body: isExistTodo
-          ? Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: _TodoPageBody(todos: todos),
-            )
-          : _EmptyBody(),
+      body: notifier.when(
+        data: (data) {
+          final todos = data.todos;
+          return todos.isEmpty
+              ? _EmptyBody()
+              : Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: _TodoPageBody(todos: todos),
+                );
+        },
+        loading: () => Center(child: _PlatformActivityIndicator()),
+        error: (e, _) => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('ロードに失敗しました。自動で再試行中…'),
+              const Gap(20),
+              _PlatformActivityIndicator(),
+            ],
+          ),
+        ),
+      ),
     );
+  }
+}
+
+/// プラットフォームに応じたローディングインジケーターウィジェット。
+class _PlatformActivityIndicator extends StatelessWidget {
+  const _PlatformActivityIndicator();
+
+  @override
+  Widget build(BuildContext context) {
+    // OS間で大体同じような大きさになるように調整
+    return Platform.isAndroid
+        ? CircularProgressIndicator(strokeWidth: 2)
+        : CupertinoActivityIndicator(radius: 18);
   }
 }
 
@@ -108,9 +156,8 @@ class _Todo extends ConsumerWidget {
             todo.onCheck ? Icons.check_box : Icons.check_box_outline_blank,
             color: context.colorScheme.iconColor,
           ),
-          onPressed: () {
-            ref.read(todoListStateNotifierProvider.notifier).toggle(index);
-          },
+          onPressed: () =>
+              ref.read(todoListStateNotifierProvider.notifier).toggle(index),
         ),
         Expanded(
           child: Padding(
@@ -156,16 +203,17 @@ class _TodoAddButton extends ConsumerWidget {
 ///
 /// TODO: 将来的に、「選択して削除」機能を追加したい
 class _TodoRemoveButton extends ConsumerWidget {
-  const _TodoRemoveButton({required this.isExsistTodo});
-
-  final bool isExsistTodo;
+  const _TodoRemoveButton();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(
       icon: Icon(Icons.delete, color: context.colorScheme.iconColor),
       onPressed: () async {
-        if (isExsistTodo) {
+        final notifier = await ref.read(todoListStateNotifierProvider.future);
+        final todos = notifier.todos;
+        if (todos.isNotEmpty) {
+          if (!context.mounted) return;
           await showDialog(
             context: context,
             builder: (context) => _TodoRemoveDialog(),

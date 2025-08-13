@@ -1,48 +1,54 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:todo_app/features/model/todo.dart';
 import 'package:todo_app/features/model/todo_list_state.dart';
+import 'package:todo_app/features/use_case/todos_command.dart';
+import 'package:todo_app/features/use_case/todos_query.dart';
 
 part 'todo_list_state_notifier.g.dart';
 
-/// Todoリストの状態を管理する Notifier クラス。
-///
-/// - Todo の追加
-/// - チェック状態のトグル
-/// - Todo の削除
-///
-/// を提供します。
-///
-/// 状態は [TodoListState] として保持され、
-/// UI 側ではこの Notifier を通じて状態を読み書きします。
+/// Todoリストの状態を管理する AsyncNotifier クラス。
 @riverpod
 class TodoListStateNotifier extends _$TodoListStateNotifier {
   @override
-  TodoListState build() {
-    // 初期状態：空のTodoリスト
-    return const TodoListState(todos: []);
+  Future<TodoListState> build() async {
+    final todos = await ref.watch(todosQueryProvider.future);
+    return TodoListState(todos: todos);
   }
 
-  // Todoを追加する
-  void add(String contents) {
-    state = state.copyWith(
-      todos: [
-        ...state.todos,
-        Todo(onCheck: false, contents: contents),
-      ],
+  /// Todoを追加する
+  Future<void> add(String contents) async {
+    // ローカルDBにレコードを追加し、rowIdを受け取る
+    final rowId = await ref.read(todosCommandProvider).insert(contents);
+
+    final todos = state.requireValue.todos;
+    state = AsyncValue.data(
+      TodoListState(
+        todos: [
+          ...todos,
+          Todo(rowId: rowId, onCheck: false, contents: contents),
+        ],
+      ),
     );
   }
 
-  // チェック状態をトグルする
-  void toggle(int index) {
-    final updated = [...state.todos];
+  /// チェック状態をトグルする
+  Future<void> toggle(int index) async {
+    final todos = state.requireValue.todos;
+    final updated = [...todos];
     final target = updated[index];
-    updated[index] = target.copyWith(onCheck: !target.onCheck);
 
-    state = state.copyWith(todos: updated);
+    final toggled = !target.onCheck;
+    updated[index] = target.copyWith(onCheck: toggled);
+
+    // ローカルDBのレコードを更新
+    ref.read(todosCommandProvider).toggle(rowId: target.rowId, done: toggled);
+    state = AsyncValue.data(TodoListState(todos: updated));
   }
 
-  // Todoをすべて削除する
-  void clear() {
-    state = state.copyWith(todos: []);
+  /// Todoをすべて削除する
+  Future<void> clear() async {
+    // ローカルDBのレコードを全削除する
+    ref.read(todosCommandProvider).deleteAll();
+    state = AsyncValue.data(const TodoListState(todos: []));
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todo_app/data/local/database.dart';
 import 'package:todo_app/features/use_case/todos_repository.dart';
 
 part 'todos_command.g.dart';
@@ -26,12 +25,12 @@ class TodosCommand {
   }
 
   /// Todoを1件追加する
-  Future<void> insert(TodosTableData entry) async {
-    await _repository.insert(entry: entry);
+  Future<int> insert(String contents) async {
+    return await _repository.insert(contents);
   }
 
-  /// Todoを更新する
-  Future<void> update(TodosTableData entry) async {
-    await _repository.update(entry: entry);
+  /// チェック状態を更新する
+  Future<void> toggle({required int rowId, required bool done}) async {
+    await _repository.update(rowId: rowId, done: done);
   }
 }
