@@ -65,28 +65,32 @@ class TodoPage extends ConsumerWidget {
                   child: _TodoPageBody(todos: todos),
                 );
         },
-        loading: () => Center(
-          child: SizedBox(
-            height: 20,
-            child: Platform.isAndroid
-                ? CircularProgressIndicator()
-                : CupertinoActivityIndicator(),
-          ),
-        ),
+        loading: () => Center(child: _PlatformActivityIndicator()),
         error: (e, _) => Center(
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('ロードに失敗しました。自動で再試行中…'),
               const Gap(20),
-              Platform.isAndroid
-                  ? CircularProgressIndicator()
-                  : CupertinoActivityIndicator(),
+              _PlatformActivityIndicator(),
             ],
           ),
         ),
       ),
     );
+  }
+}
+
+/// プラットフォームに応じたローディングインジケーターウィジェット。
+class _PlatformActivityIndicator extends StatelessWidget {
+  const _PlatformActivityIndicator();
+
+  @override
+  Widget build(BuildContext context) {
+    // OS間で大体同じような大きさになるように調整
+    return Platform.isAndroid
+        ? CircularProgressIndicator(strokeWidth: 2)
+        : CupertinoActivityIndicator(radius: 18);
   }
 }
 
