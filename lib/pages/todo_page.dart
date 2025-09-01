@@ -7,11 +7,11 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_app/extensions/context_extensions.dart';
 import 'package:todo_app/extensions/font_size_extensions.dart';
-import 'package:todo_app/features/model/todo.dart';
+import 'package:todo_app/model/todo.dart';
 import 'package:todo_app/extensions/color_scheme_extensions.dart';
-import 'package:todo_app/features/model/todo_list_state.dart';
-import 'package:todo_app/features/use_case/todo_list_state_notifier.dart';
-import 'package:todo_app/features/widget/base_dialog.dart';
+import 'package:todo_app/model/todo_list_state.dart';
+import 'package:todo_app/use_case/todo_list_state_notifier.dart';
+import 'package:todo_app/widget/base_dialog.dart';
 
 /// Todoページ。
 class TodoPage extends ConsumerWidget {

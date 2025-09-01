@@ -1,8 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todo_app/features/model/todo.dart';
-import 'package:todo_app/features/model/todo_list_state.dart';
-import 'package:todo_app/features/use_case/todos_command.dart';
-import 'package:todo_app/features/use_case/todos_query.dart';
+import 'package:todo_app/model/todo.dart';
+import 'package:todo_app/model/todo_list_state.dart';
+import 'package:todo_app/use_case/todos_command.dart';
+import 'package:todo_app/use_case/todos_query.dart';
 
 part 'todo_list_state_notifier.g.dart';
 
