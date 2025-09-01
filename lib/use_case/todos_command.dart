@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todo_app/features/use_case/todos_repository.dart';
+import 'package:todo_app/use_case/todos_repository.dart';
 
 part 'todos_command.g.dart';
 
